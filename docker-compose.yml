@@ -1,0 +1,32 @@
+version: "3.5"
+
+x-default-node: &default-node
+        build: .
+        environment:
+            APP_ENV: "dev"
+        volumes:
+          - ".:/app:cached"
+        networks:
+          - nodes
+
+services:
+    blockchain-node-1:
+      <<: *default-node
+      ports:
+        - "5001:5000"
+      environment:
+        APP_ADDRESS: "http://blockchain-node-1:5000"
+    blockchain-node-2:
+      <<: *default-node
+      ports:
+        - "5002:5000"
+      environment:
+        APP_ADDRESS: "http://blockchain-node-2:5000"
+    blockchain-node-3:
+      <<: *default-node
+      ports:
+        - "5003:5000"
+      environment:
+        APP_ADDRESS: "http://blockchain-node-3:5000"
+networks:
+  nodes:
